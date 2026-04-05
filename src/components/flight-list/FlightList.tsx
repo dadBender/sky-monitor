@@ -6,42 +6,16 @@ import type { TAnyFlight } from '@/lib/trpc'
 
 import type { TFlightMode } from '@/screens/home/Home'
 
-mport
-{
-	RefreshCw
-}
-from
-'../animate-ui/icons/refresh-cw'
-imprt
-{
-	SkeletonLoader
-}
-from
-'../custom-ui/SkeletonLoader'
-impot
-{
-	Filters
-}
-from
-'../filters/Filters'
-impor
-{
-	Button
-}
-from
-'../ui/button'
+import { RefreshCw } from '../animate-ui/icons/refresh-cw'
+import { SkeletonLoader } from '../custom-ui/SkeletonLoader'
+import { Filters } from '../filters/Filters'
+import { Button } from '../ui/button'
 
-impor
-{
-	FlightCard
-}
-from
-'./FlightCard'
+import { FlightCard } from './FlightCard'
 import { formatDate } from './format-date'
-import tye { ICountryOption } from '@/constants/countries'
+import type { ICountryOption } from '@/constants/countries'
 
-interfaceProps
-{
+interface Props {
 	flights: TAnyFlight[]
 	airlines: string[]
 	refetch: () => void
@@ -66,7 +40,7 @@ interfaceProps
 
 export function FlightList({
 	flights,
-														 airlines,
+	airlines,
 	isRefetching,
 	isPending,
 	lastUpdate,
@@ -78,9 +52,9 @@ export function FlightList({
 	countryOptions,
 	fetchNextPage,
 	hasNextPage,
-														 isFetchingNextPage,
-														 flightMode,
-														 setFlightMode
+	isFetchingNextPage,
+	flightMode,
+	setFlightMode
 }: Props) {
 	const { ref: loadMoreRef, inView } = useInView({ rootMargin: '100px' })
 	const lastFetchRef = useRef(0)
@@ -140,7 +114,7 @@ export function FlightList({
 			)}
 
 			{isShowList && (
-				<div className="max-h-[calc(100vh-4rem)] min-h-[calc(100vh-4rem)] space-y-4 overflow-y-auto pt-3 pb-8">
+				<div className='max-h-[calc(100vh-4rem)] min-h-[calc(100vh-4rem)] space-y-4 overflow-y-auto pt-3 pb-8'>
 					{isPending ? (
 						<SkeletonLoader count={5} className='mb-4 h-40' />
 					) : (

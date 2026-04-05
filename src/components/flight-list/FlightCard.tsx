@@ -7,17 +7,9 @@ import { cn } from '@/lib/utils'
 import { ProgressBar } from '../custom-ui/ProgressBar'
 
 import { FlightCardActions } from './actions/FlightCardActions'
+import { QUERY_PARAM_FLIGHT } from './flights.constants'
 
-imort
-{
-	QUERY_PARAM_FLIGHT
-}
-from
-'./flights.constants'
-
-inerface
-Props
-{
+interface Props {
 	flight: TAnyFlight
 	index?: number
 }
@@ -71,12 +63,12 @@ export function FlightCard({ flight, index }: Props) {
 
 					<div className='mb-4'>
 						{flight.isScheduled ? (
-							<div className="flex flex-col items-center gap-0.5 py-1">
-								<div className="text-muted-foreground flex items-center gap-1.5 text-xs">
+							<div className='flex flex-col items-center gap-0.5 py-1'>
+								<div className='text-muted-foreground flex items-center gap-1.5 text-xs'>
 									<Clock size={12} />
 									<span>Departing at</span>
 								</div>
-								<span className="text-base font-semibold">
+								<span className='text-base font-semibold'>
 									{flight.schedule.departure.scheduled.localTime}
 								</span>
 							</div>
