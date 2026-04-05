@@ -1,8 +1,14 @@
-import type { TAirlineAssets } from '../data/airline-assets.data'
-import type { TComputeRouteMetrics } from '../utils/map-aviation-stack/compute-route-metrics'
-import type { TGetFlightSchedule } from '../utils/map-aviation-stack/get-flight-schedule'
+import type { TAirlineAssets } from '../data/airline-assets.data';
+import type { TComputeRouteMetrics } from '../utils/map-aviation-stack/compute-route-metrics';
+import type { TGetFlightSchedule } from '../utils/map-aviation-stack/get-flight-schedule';
 
-import type { ICoordinate } from './types'
+
+
+import type { ICoordinate } from './types';
+
+
+
+
 
 export interface IFlightRoute {
 	speed: number
@@ -36,4 +42,6 @@ export interface IFlight {
 	progress: number
 	currentLocation: Pick<IFlightLocation, 'coordinates'>
 	schedule: TGetFlightSchedule
+	/** Present and true for future scheduled flights (not yet departed) */
+	isScheduled?: boolean
 }
