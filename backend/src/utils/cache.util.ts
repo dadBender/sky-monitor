@@ -21,7 +21,27 @@ export class SimpleCache<T> {
 		return entry.data
 	}
 
-	set(key: string, value: T) {
+	set(key: string, value: T): void {
 		this.cache.set(key, { data: value, timestamp: Date.now() })
+	}
+
+	delete(key: string): void {
+		this.cache.delete(key)
+	}
+
+	/** Invalidate all entries whose key starts with the given prefix */
+	invalidateByPrefix(prefix: string): number {
+		let count = 0
+		for (const key of this.cache.keys()) {
+			if (key.startsWith(prefix)) {
+				this.cache.delete(key)
+				count++
+			}
+		}
+		return count
+	}
+
+	clear(): void {
+		this.cache.clear()
 	}
 }
