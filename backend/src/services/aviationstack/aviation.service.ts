@@ -14,9 +14,9 @@ dotenv.config()
 class AviationService {
 	private apiUrl: string
 	private token: string
-	private flightsCache = new SimpleCache<IFetchFlightsResponse>(120_000) // TTL 1 min.
-	private countriesCache = new SimpleCache<IFetchCountriesResponse>(600_000) // TTL 10 min.
-	private airlinesCache = new SimpleCache<IFetchAirlinesResponse>(600_000) // TTL 10 min.
+	private flightsCache = new SimpleCache<IFetchFlightsResponse>(120_000)
+	private countriesCache = new SimpleCache<IFetchCountriesResponse>(600_000)
+	private airlinesCache = new SimpleCache<IFetchAirlinesResponse>(600_000)
 
 	constructor() {
 		this.apiUrl = 'https://api.aviationstack.com/v1'
@@ -32,7 +32,6 @@ class AviationService {
 	async fetchLiveFlights(limit = 10, offset = 0, airlineName?: string) {
 		const cacheKey = `flights_${limit}_${offset}_${airlineName || 'all'}`
 
-		// 1. Проверяем кэш
 		const cached = this.flightsCache.get(cacheKey)
 		if (cached) {
 			console.log('Returning cached flights')
@@ -76,7 +75,6 @@ class AviationService {
 	async fetchCountries() {
 		const cacheKey = 'countries'
 
-		// 1. Проверяем кэш
 		const cached = this.countriesCache.get(cacheKey)
 		if (cached) {
 			console.log('Returning cached countries')
@@ -94,7 +92,6 @@ class AviationService {
 
 			console.log('Countries successfully fetched from AviationStack API')
 
-			// 3. Сохраняем в кэш
 			this.countriesCache.set(cacheKey, response.data)
 
 			return response.data
@@ -112,7 +109,6 @@ class AviationService {
 	async fetchAirlines() {
 		const cacheKey = 'airlines'
 
-		// 1. Проверяем кэш
 		const cached = this.airlinesCache.get(cacheKey)
 		if (cached) {
 			console.log('Returning cached airlines')
@@ -130,7 +126,6 @@ class AviationService {
 
 			console.log('Airlines successfully fetched from AviationStack API')
 
-			// 3. Сохраняем в кэш
 			this.airlinesCache.set(cacheKey, response.data)
 
 			return response.data

@@ -2,6 +2,7 @@ import { ArrowDownFromLine, ArrowUpFromLine } from 'lucide-react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
 
+import type { ICountryOption } from '@/constants/countries'
 import type { TInfiniteQueryResponseFlight } from '@/types/flight.types'
 
 import { RefreshCw } from '../animate-ui/icons/refresh-cw'
@@ -22,6 +23,10 @@ interface Props {
 	currentAirline: string | undefined
 	setCurrentAirline: (airline: string | undefined) => void
 
+	selectedCountries: string[]
+	setSelectedCountries: (countries: string[]) => void
+	countryOptions: ICountryOption[]
+
 	fetchNextPage: () => void
 	hasNextPage: boolean
 	isFetchingNextPage: boolean
@@ -35,6 +40,9 @@ export function FlightList({
 	refetch,
 	currentAirline,
 	setCurrentAirline,
+	selectedCountries,
+	setSelectedCountries,
+	countryOptions,
 	fetchNextPage,
 	hasNextPage,
 	isFetchingNextPage
@@ -70,8 +78,11 @@ export function FlightList({
 			<Filters
 				currentAirline={currentAirline}
 				setCurrentAirline={setCurrentAirline}
+				selectedCountries={selectedCountries}
+				setSelectedCountries={setSelectedCountries}
 				isLoading={isPending}
 				airlines={selectAirlines}
+				countryOptions={countryOptions}
 			/>
 
 			<div className='xs:right-0 xs:space-y-2 absolute top-0 -right-12.5'>

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useSearchParams } from 'react-router'
 
+import { COUNTRY_OPTIONS, DEFAULT_COUNTRY_CODES } from '@/constants/countries'
 import { FlightDetails } from '@/components/flight-details/FlightDetails'
 import { FlightList } from '@/components/flight-list/FlightList'
 import { SkyTrackMap } from '@/components/map/SkyTrackMap'
@@ -11,6 +12,7 @@ export function Home() {
 	const lastUpdateRef = useRef<Date | null>(new Date())
 
 	const [currentAirline, setCurrentAirline] = useState<string | undefined>(undefined)
+	const [selectedCountries, setSelectedCountries] = useState<string[]>(DEFAULT_COUNTRY_CODES)
 
 	const {
 		data,
@@ -24,7 +26,8 @@ export function Home() {
 	} = trpc.flights.getLive.useInfiniteQuery(
 		{
 			limit: 10,
-			airlineName: currentAirline
+			airlineName: currentAirline,
+			countryCodes: selectedCountries
 		},
 		{
 			getNextPageParam: lastPage => lastPage.nextCursor,
@@ -62,6 +65,9 @@ export function Home() {
 				refetch={refetch}
 				currentAirline={currentAirline}
 				setCurrentAirline={setCurrentAirline}
+				selectedCountries={selectedCountries}
+				setSelectedCountries={setSelectedCountries}
+				countryOptions={COUNTRY_OPTIONS}
 				fetchNextPage={fetchNextPage}
 				hasNextPage={hasNextPage}
 				isFetchingNextPage={isFetchingNextPage}
