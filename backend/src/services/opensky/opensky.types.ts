@@ -5,7 +5,7 @@ export interface IOpenSkyTokenResponse {
 
 export interface IOpenskyState {
 	icao24: string // "39de4f"
-	callsign: string | null // "TVF3037", может быть пустым
+	callsign: string | null // "TVF3037",
 	originCountry: string // "France"
 	timePosition: number | null // 1753821226
 	lastContact: number // 1753821226

@@ -1,29 +1,37 @@
+import type { ICountryOption } from '@/constants/countries'
+
+import { CountryMultiSelect } from './CountryMultiSelect'
 import { FilterSearchSelect } from './FilterSearchSelect'
 
 interface Props {
 	currentAirline: string | undefined
 	setCurrentAirline: (airline: string | undefined) => void
 
+	selectedCountries: string[]
+	setSelectedCountries: (countries: string[]) => void
+
 	isLoading: boolean
 	airlines: string[]
+	countryOptions: ICountryOption[]
 }
 
 export function Filters({
 	currentAirline,
 	setCurrentAirline,
+	selectedCountries,
+	setSelectedCountries,
 	isLoading,
-	airlines
+	airlines,
+	countryOptions
 }: Props) {
 	return (
 		<div className='xs:gap-2 xs:ml-0 xs:flex xs:justify-center xs:flex-wrap xs:w-11/12 ml-1 grid grid-cols-2 gap-3'>
-			{/* Country filter hidden for now — filtering happens server-side via fromCountry param
-			<FilterSearchSelect
-				data={countries}
-				entityName='country'
-				value={fromCountry}
-				onChange={setFromCountry}
+			<CountryMultiSelect
+				value={selectedCountries}
+				onChange={setSelectedCountries}
+				options={countryOptions}
 				isLoading={isLoading}
-			/> */}
+			/>
 			<FilterSearchSelect
 				data={airlines}
 				entityName='airline'
