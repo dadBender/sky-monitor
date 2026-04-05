@@ -1,20 +1,49 @@
 import { ArrowDownFromLine, ArrowUpFromLine } from 'lucide-react'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
 
-import type { ICountryOption } from '@/constants/countries'
-import type { TInfiniteQueryResponseFlight } from '@/types/flight.types'
+import type { TAnyFlight } from '@/lib/trpc'
 
-import { RefreshCw } from '../animate-ui/icons/refresh-cw'
-import { SkeletonLoader } from '../custom-ui/SkeletonLoader'
-import { Filters } from '../filters/Filters'
-import { Button } from '../ui/button'
+import type { TFlightMode } from '@/screens/home/Home'
 
-import { FlightCard } from './FlightCard'
+mport
+{
+	RefreshCw
+}
+from
+'../animate-ui/icons/refresh-cw'
+imprt
+{
+	SkeletonLoader
+}
+from
+'../custom-ui/SkeletonLoader'
+impot
+{
+	Filters
+}
+from
+'../filters/Filters'
+impor
+{
+	Button
+}
+from
+'../ui/button'
+
+impor
+{
+	FlightCard
+}
+from
+'./FlightCard'
 import { formatDate } from './format-date'
+import tye { ICountryOption } from '@/constants/countries'
 
-interface Props {
-	flights: TInfiniteQueryResponseFlight[]
+interfaceProps
+{
+	flights: TAnyFlight[]
+	airlines: string[]
 	refetch: () => void
 	isRefetching: boolean
 	isPending: boolean
@@ -30,10 +59,14 @@ interface Props {
 	fetchNextPage: () => void
 	hasNextPage: boolean
 	isFetchingNextPage: boolean
+
+	flightMode: TFlightMode
+	setFlightMode: (mode: TFlightMode) => void
 }
 
 export function FlightList({
 	flights,
+														 airlines,
 	isRefetching,
 	isPending,
 	lastUpdate,
@@ -45,31 +78,21 @@ export function FlightList({
 	countryOptions,
 	fetchNextPage,
 	hasNextPage,
-	isFetchingNextPage
+														 isFetchingNextPage,
+														 flightMode,
+														 setFlightMode
 }: Props) {
 	const { ref: loadMoreRef, inView } = useInView({ rootMargin: '100px' })
 	const lastFetchRef = useRef(0)
 
 	useEffect(() => {
-		if (inView && hasNextPage && !isFetchingNextPage) {
+		if (inView && hasNextPage && !isFetchingNextPage && flightMode === 'live') {
 			const now = Date.now()
 			if (now - lastFetchRef.current < 4000) return
 			lastFetchRef.current = now
-
-			console.log('⬇️ Loading next page...')
 			fetchNextPage()
 		}
-	}, [fetchNextPage, hasNextPage, inView, isFetchingNextPage])
-
-	const selectAirlines = useMemo(
-		() =>
-			Array.from(
-				new Set(
-					flights.map(f => f?.airline.name).filter((f): f is string => !!f)
-				)
-			),
-		[flights]
-	)
+	}, [fetchNextPage, hasNextPage, inView, isFetchingNextPage, flightMode])
 
 	const [isShowList, setIsShowList] = useState(true)
 
@@ -81,8 +104,10 @@ export function FlightList({
 				selectedCountries={selectedCountries}
 				setSelectedCountries={setSelectedCountries}
 				isLoading={isPending}
-				airlines={selectAirlines}
+				airlines={airlines}
 				countryOptions={countryOptions}
+				flightMode={flightMode}
+				setFlightMode={setFlightMode}
 			/>
 
 			<div className='xs:right-0 xs:space-y-2 absolute top-0 -right-12.5'>
@@ -115,7 +140,7 @@ export function FlightList({
 			)}
 
 			{isShowList && (
-				<div className='max-h-[calc(100vh-4rem)] min-h-[calc(100vh-4rem)] overflow-y-auto space-y-4 pt-3 pb-8'>
+				<div className="max-h-[calc(100vh-4rem)] min-h-[calc(100vh-4rem)] space-y-4 overflow-y-auto pt-3 pb-8">
 					{isPending ? (
 						<SkeletonLoader count={5} className='mb-4 h-40' />
 					) : (

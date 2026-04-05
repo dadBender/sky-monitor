@@ -214,6 +214,42 @@ export const AIRLINE_ASSETS = [
 		planeModel: 'Airbus A320',
 		countryFlag: '🇹🇷',
 		country: 'Turkey'
+	},
+	{
+		name: 'Aeroflot',
+		logo: '/logos/aeroflot.svg',
+		aircraft: '/planes/aeroflot-plane.png',
+		gradient: ['#e8efff', '#003580'],
+		planeModel: 'Airbus A320',
+		countryFlag: '🇷🇺',
+		country: 'Russia'
+	},
+	{
+		name: 'Rossiya Airlines',
+		logo: '/logos/rossiya.svg',
+		aircraft: '/planes/rossiya-plane.png',
+		gradient: ['#f0e8d0', '#1a3a6b'],
+		planeModel: 'Boeing 737-800',
+		countryFlag: '🇷🇺',
+		country: 'Russia'
+	},
+	{
+		name: 'Ural Airlines',
+		logo: '/logos/ural-airlines.svg',
+		aircraft: '/planes/ural-airlines-plane.png',
+		gradient: ['#dce8fb', '#1e5cbf'],
+		planeModel: 'Airbus A320',
+		countryFlag: '🇷🇺',
+		country: 'Russia'
+	},
+	{
+		name: 'Nordwind Airlines',
+		logo: '/logos/nordwind.svg',
+		aircraft: '/planes/nordwind-plane.png',
+		gradient: ['#e0e8f5', '#2b4f8a'],
+		planeModel: 'Boeing 737-800',
+		countryFlag: '🇷🇺',
+		country: 'Russia'
 	}
 ]
 

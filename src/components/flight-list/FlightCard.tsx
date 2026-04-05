@@ -1,15 +1,24 @@
+import { Clock } from 'lucide-react'
 import { useSearchParams } from 'react-router'
 
-import type { TFlight } from '@/lib/trpc'
+import type { TAnyFlight } from '@/lib/trpc'
 import { cn } from '@/lib/utils'
 
 import { ProgressBar } from '../custom-ui/ProgressBar'
 
 import { FlightCardActions } from './actions/FlightCardActions'
-import { QUERY_PARAM_FLIGHT } from './flights.constants'
 
-interface Props {
-	flight: TFlight
+imort
+{
+	QUERY_PARAM_FLIGHT
+}
+from
+'./flights.constants'
+
+inerface
+Props
+{
+	flight: TAnyFlight
 	index?: number
 }
 
@@ -19,9 +28,7 @@ export function FlightCard({ flight, index }: Props) {
 
 	const isActive = selectedFlight === flight?.id
 
-	if (!flight) {
-		return null
-	}
+	if (!flight) return null
 
 	return (
 		<div
@@ -35,11 +42,7 @@ export function FlightCard({ flight, index }: Props) {
 		>
 			<FlightCardActions flightId={flight.id} />
 			<button
-				onClick={() => {
-					setSearchParams({
-						[QUERY_PARAM_FLIGHT]: flight.id
-					})
-				}}
+				onClick={() => setSearchParams({ [QUERY_PARAM_FLIGHT]: flight.id })}
 				className={cn('bg-flight-card block h-full w-full rounded-lg p-4')}
 			>
 				<div className='mb-7 flex items-center justify-between'>
@@ -67,7 +70,19 @@ export function FlightCard({ flight, index }: Props) {
 					</div>
 
 					<div className='mb-4'>
-						<ProgressBar percentage={flight.progress} />
+						{flight.isScheduled ? (
+							<div className="flex flex-col items-center gap-0.5 py-1">
+								<div className="text-muted-foreground flex items-center gap-1.5 text-xs">
+									<Clock size={12} />
+									<span>Departing at</span>
+								</div>
+								<span className="text-base font-semibold">
+									{flight.schedule.departure.scheduled.localTime}
+								</span>
+							</div>
+						) : (
+							<ProgressBar percentage={flight.progress} />
+						)}
 					</div>
 
 					<div className='space-y-0.5 text-right'>
