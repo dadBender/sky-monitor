@@ -1,54 +1,65 @@
-# React + TypeScript + Vite
+# Sky Monitor
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Real-time flight tracking application with live flight data, filtering by country, and detailed flight information.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+**Frontend:** React 19, TypeScript, Vite, Tailwind CSS v4, React Router v7, Motion  
+**Backend:** Express, tRPC, Better-SQLite3, Bun
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Live flight tracking via OpenSky Network API
+- Filter flights by country (CIS/Russia-priority dictionary)
+- Flight details: airline, aircraft, route, speed, altitude
+- Airline logos, aircraft images, country flags
+- Animated UI components
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Getting Started
+
+### Prerequisites
+
+- [Bun](https://bun.sh) runtime
+
+### Install dependencies
+
+```bash
+bun install
+cd backend && bun install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Run development
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
+# Frontend
+bun run dev
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+# Backend (in separate terminal)
+cd backend && bun run dev
+```
+
+### Build
+
+```bash
+bun run build
+```
+
+## Project Structure
+
+```
+├── src/
+│   ├── components/         # UI components
+│   │   ├── flight-list/    # Flight list & cards
+│   │   ├── flight-details/ # Flight detail view
+│   │   └── animate-ui/     # Animated components
+│   ├── screens/            # Page-level components
+│   ├── hooks/              # Custom React hooks
+│   ├── services/           # API services (tRPC client)
+│   ├── store/              # State management
+│   └── types/              # TypeScript interfaces
+└── backend/
+    └── src/
+        ├── routers/        # tRPC routers (flights, airlines)
+        ├── db/             # SQLite database & migrations
+        └── services/       # External API integrations
 ```
